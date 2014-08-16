@@ -21,6 +21,10 @@
  * The width of the line used to draw the progress view.
  **/
 @property (nonatomic, assign) CGFloat lineWidth;
+/**
+ * The failure state of the view.
+ **/
+@property(nonatomic, assign) BOOL failed;
 
 /**
  * The color of the progress view

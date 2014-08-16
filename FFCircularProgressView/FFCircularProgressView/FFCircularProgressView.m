@@ -128,6 +128,8 @@
         if (!_hideProgressIcons)
             [self drawStop];
         
+    } else if ([self failed]) {
+        [self drawError];
     } else {
         if (!self.iconView && !self.iconPath)
         {
@@ -256,6 +258,22 @@
     _iconLayer.fillColor = nil;
 }
 
+- (void)drawError {
+    CGFloat radius = (self.bounds.size.width) / 2;
+    CGFloat ratio = .5;
+    CGFloat sideSize = self.bounds.size.width * ratio;
+    
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint:CGPointMake(0.0, 0.0)];
+    [path addLineToPoint:CGPointMake(sideSize, sideSize)];
+    [path moveToPoint:CGPointMake(0, sideSize)];
+    [path addLineToPoint:CGPointMake(sideSize, 0)];
+    [path applyTransform:CGAffineTransformMakeTranslation(radius * (1 - ratio), radius * (1 - ratio))];
+    
+    [_iconLayer setPath:path.CGPath];
+}
+
+
 #pragma mark Setters
 
 - (void)setProgress:(CGFloat)progress {
@@ -274,6 +292,12 @@
         
         [self setNeedsDisplay];
     }
+}
+
+- (void)setFailed:(BOOL)failed {
+    _failed = failed;
+    [self setProgress:0];
+    [self setNeedsDisplay];
 }
 
 #pragma mark Animations
