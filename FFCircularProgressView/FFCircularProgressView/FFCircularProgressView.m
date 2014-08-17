@@ -296,7 +296,9 @@
 
 - (void)setFailed:(BOOL)failed {
     _failed = failed;
-    [self setProgress:0];
+    if (failed) {
+        [self setProgress:0];
+    }
     [self setNeedsDisplay];
 }
 
